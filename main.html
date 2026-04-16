@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas tutorial</title>
+    <style>
+        canvas {
+            border: 5px solid black;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>
+<script>
+    function base_10_digit_to_hex(number){
+        i = ["a", "b", "c", "d", "e", "f"];
+        if (number > 9){
+            return i[number-10]
+        }else{
+            return number;
+        }
+    }
+
+    let grid = []
+    xSize = parseInt(prompt("enter x Size"))
+    ySize = parseInt(prompt("enter y Size"))
+    let xCounter = 0
+    while(xCounter < xSize) {
+        let yCounter = 0
+        let rowToPush = []
+
+        while (yCounter < ySize) {
+            let temp = 0
+            let hexString = "#"
+            while (temp < 6){
+                hexString += base_10_digit_to_hex(Math.floor((Math.random()-0.001)*15))
+                temp++;
+            }
+            rowToPush.push(hexString)
+
+            yCounter++;
+        }
+        grid.push(rowToPush)
+
+        xCounter++;
+    }
+
+
+    function draw() {
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = "blue";
+        ctx.font = "48px serif";
+
+        xCounter = 0
+        while(xCounter < grid.length) {
+            yCounter = 0
+
+            while (yCounter < grid[xCounter].length) {
+                ctx.fillStyle = grid[xCounter][yCounter];
+                console.log(typeof(grid[xCounter][yCounter]))
+
+                ctx.fillRect(50 * xCounter, 50 * yCounter, 50, 50)
+
+                yCounter++;
+            }
+
+            xCounter++;
+        }
+    }
+    setInterval(draw, 16.75);
+
+</script>
+</body>
+</html>
